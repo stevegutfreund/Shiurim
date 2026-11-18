@@ -1,0 +1,18 @@
+# data/units.json is reference data (halachic measures), tracked on purpose
+*.depr
+
+# --- Secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.log
+*.tmp
+
+# Your edits to the modern values (personal)
+data/modern.json

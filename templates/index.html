@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מחשבון שיעורים</title>
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="brand-icon"><img src="{{ url_for('static', filename='favicon.svg') }}" alt="" width="30" height="30"></span> מחשבון שיעורים</div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="calc" class="on">מחשבון</button>
+      <button role="tab" data-tab="table">טבלת שיעורים</button>
+      <button role="tab" data-tab="settings" id="settingsTabBtn" hidden>הגדרות שיעור מודרני</button>
+    </nav>
+    <div class="modern-ctl">
+      <label class="toggle" title="הצגת השיעור בס&quot;מ / מ&quot;ל / גרם">
+        <input type="checkbox" id="modernToggle">
+        <span class="track"><span class="knob"></span></span>
+        <span>שיעור מודרני</span>
+      </label>
+      <div class="shita-switch" id="shitaSwitch" aria-label="שיטה" hidden></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ===== Calculator ===== -->
+  <section id="tab-calc" class="tab-panel">
+    <div class="cat-switch" id="catSwitch" role="radiogroup" aria-label="קטגוריה"></div>
+
+    <div class="ladder-wrap">
+      <span class="field-label">סולם היחידות</span>
+      <div class="ladder" id="ladder"></div>
+    </div>
+
+    <div class="calc-grid">
+      <div class="card input-card">
+        <label class="field">
+          <span class="field-label">כמות</span>
+          <div class="amount-row">
+            <button class="step" id="amtMinus" type="button" aria-label="פחות">−</button>
+            <input id="amount" inputmode="decimal" autocomplete="off" value="1">
+            <button class="step" id="amtPlus" type="button" aria-label="יותר">+</button>
+          </div>
+          <span class="hint">אפשר גם שבר: ½ ,1/2 או 1 1/2</span>
+        </label>
+
+        <div class="unit-row">
+          <label class="field">
+            <span class="field-label">מיחידה</span>
+            <select id="fromUnit"></select>
+          </label>
+          <button class="swap" id="swap" type="button" title="החלפה">⇄</button>
+          <label class="field">
+            <span class="field-label">ליחידה</span>
+            <select id="toUnit"></select>
+          </label>
+        </div>
+
+        <div class="presets">
+          <span class="field-label">קיצורים</span>
+          <div class="chips" id="presets"></div>
+        </div>
+      </div>
+
+      <div class="card result-card" aria-live="polite">
+        <div class="result-eq" id="resultEq"></div>
+        <div class="result-main">
+          <span class="result-num" id="resultNum">–</span>
+          <span class="result-unit" id="resultUnit"></span>
+        </div>
+        <div class="result-frac" id="resultFrac"></div>
+        <div class="breakdown" id="breakdown"></div>
+
+        <div class="modern-box" id="modernBox" hidden>
+          <div class="modern-title">בשיעור מודרני</div>
+          <div class="modern-cols" id="modernCols"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>הכמות בכל יחידות <span id="allCatName"></span></h2>
+        <span class="hint">לחיצה על שורה בוחרת אותה כיחידת יעד</span>
+      </div>
+      <div class="all-units" id="allUnits"></div>
+    </div>
+  </section>
+
+  <!-- ===== Reference tables ===== -->
+  <section id="tab-table" class="tab-panel" hidden>
+    <div class="table-tools">
+      <div class="cat-switch" id="tableCatSwitch" role="radiogroup" aria-label="קטגוריה"></div>
+      <input id="search" type="search" placeholder="חיפוש יחידה…" autocomplete="off">
+      <span class="hint" id="searchCount"></span>
+    </div>
+    <div id="refTables"></div>
+  </section>
+
+  <!-- ===== Modern values ===== -->
+  <section id="tab-settings" class="tab-panel" hidden>
+    <div class="card">
+      <div class="card-head">
+        <h2>שיעורים מודרניים</h2>
+        <span class="hint">הערכים שעליהם מבוסס כל החישוב המודרני. נשמרים במחשב ומשפיעים על כל הטאבים.</span>
+      </div>
+      <form id="modernForm" class="modern-form"></form>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="saveModern" type="button">שמירה</button>
+        <button class="btn" id="resetModern" type="button">חזרה לערכי הגיליון</button>
+        <span class="save-status" id="saveStatus"></span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footnote">הנתונים מתוך גיליון "מחשבון שיעורים" (טאב יחידות). אין לסמוך על המחשבון להלכה למעשה בלי לשאול רב.</footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
